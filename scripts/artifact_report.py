@@ -1,7 +1,7 @@
 import html
 import os
 from scripts.html_parts import *
-from scripts.ilapfuncs import is_platform_windows
+from scripts.ilapfuncs import is_platform_windows, logfunc
 from scripts.version_info import aleapp_version
 
 class ArtifactHtmlReport:
@@ -22,6 +22,7 @@ class ArtifactHtmlReport:
         '''Creates the report HTML file and writes the artifact name as a heading'''
         
         if self.write_to_devnull:
+            logfunc(f'Writing "{artifact_file_name}" artifact report to devnull 😈')
             self.report_file = open(os.devnull, 'w', encoding='utf8')
         else:
             self.report_file = open(os.path.join(report_folder, f'{artifact_file_name}.temphtml'), 'w', encoding='utf8')
