@@ -119,4 +119,12 @@ class FileSeekerZip(FileSeekerBase):
 
     def cleanup(self):
         self.zip_file.close()
-        
+
+class FileSeekerWeb(FileSeekerBase):
+    def __init__(self, web_api_path, temp_folder):
+        FileSeekerBase.__init__(self)
+        self.uri = web_api_path
+        logfunc('File seeker web api!')
+        #self.name_list = self.uri.namelist()
+        #self.temp_folder = temp_folder
+        #self.directory = temp_folder            

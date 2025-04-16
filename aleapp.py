@@ -24,7 +24,7 @@ def validate_args(args):
             raise argparse.ArgumentError(None, f'No {arg.upper()} provided. Run the program again.')
 
     # Check existence of paths
-    if not os.path.exists(args.input_path):
+    if args.t != 'web' and not os.path.exists(args.input_path):
         raise argparse.ArgumentError(None, 'INPUT file/folder does not exist! Run the program again.')
 
     if not os.path.exists(args.output_path):
@@ -133,10 +133,11 @@ def create_casedata(path):
 
 def main():
     parser = argparse.ArgumentParser(description='ALEAPP: Android Logs, Events, and Protobuf Parser.')
-    parser.add_argument('-t', choices=['fs', 'tar', 'zip', 'gz'], required=False, action="store",
+    parser.add_argument('-t', choices=['fs', 'tar', 'zip', 'gz', 'web'], required=False, action="store",
                         help=("Specify the input type. "
                               "'fs' for a folder containing extracted files with normal paths and names, "
-                              "'tar', 'zip', or 'gz' for compressed packages containing files with normal names. "
+                              "'tar', 'zip', or 'gz' for compressed packages containing files with normal names, "
+                              "'web' for compatible REST api"
                               ))
     parser.add_argument('-o', '--output_path', required=False, action="store",
                         help='Path to base output folder (this must exist)')
@@ -302,7 +303,8 @@ def crunch_artifacts(
     logfunc(f'ALEAPP v{aleapp_version}: ALEAPP Logs, Events, and Protobuf Parser')
     logfunc('Objective: Triage Android Full System Extractions.')
     logfunc('By: Alexis Brignoni | @AlexisBrignoni | abrignoni.com')
-    logfunc('By: Yogesh Khatri   | @SwiftForensics | swiftforensics.com\n')
+    logfunc('By: Yogesh Khatri   | @SwiftForensics | swiftforensics.com')
+    logfunc('By: 😈 \n')
     logdevinfo()
     
     seeker = None
@@ -315,6 +317,9 @@ def crunch_artifacts(
 
         elif extracttype == 'zip':
             seeker = FileSeekerZip(input_path, out_params.temp_folder)
+            
+        elif extracttype == 'web':
+            seeker = FileSeekerWeb(input_path, out_params.temp_folder)
 
         else:
             logfunc('Error on argument -o (input type)')
