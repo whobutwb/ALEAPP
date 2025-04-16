@@ -7,7 +7,7 @@ from scripts.version_info import aleapp_version
 class ArtifactHtmlReport:
 
     def __init__(self, artifact_name, artifact_category=''):
-        self.write_to_devnull = True
+        self.write_to_devnull = False
         self.report_file = None
         self.report_file_path = ''
         self.script_code = ''
