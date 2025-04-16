@@ -7,6 +7,7 @@ from scripts.version_info import aleapp_version
 class ArtifactHtmlReport:
 
     def __init__(self, artifact_name, artifact_category=''):
+        self.write_to_devnull = True
         self.report_file = None
         self.report_file_path = ''
         self.script_code = ''
@@ -19,7 +20,12 @@ class ArtifactHtmlReport:
 
     def start_artifact_report(self, report_folder, artifact_file_name, artifact_description=''):
         '''Creates the report HTML file and writes the artifact name as a heading'''
-        self.report_file = open(os.path.join(report_folder, f'{artifact_file_name}.temphtml'), 'w', encoding='utf8')
+        
+        if self.write_to_devnull:
+            self.report_file = open(os.devnull, 'w', encoding='utf8')
+        else:
+            self.report_file = open(os.path.join(report_folder, f'{artifact_file_name}.temphtml'), 'w', encoding='utf8')
+        
         self.report_file.write(page_header.format(f'ALEAPP - {self.artifact_name} report'))
         self.report_file.write(body_start.format(f'ALEAPP {aleapp_version}'))
         self.report_file.write(body_sidebar_setup)
