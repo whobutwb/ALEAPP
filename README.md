@@ -1,4 +1,4 @@
-![ALEAPP](scripts/ALEAPP_banner.png)
+![ALEAPP](assets/ALEAPP_logo.png)
 
 # Android Logs Events And Protobuf Parser
 
@@ -173,3 +173,5 @@ def get_cool_data1(files_found, report_folder, seeker, wrap_text):
 ## Acknowledgements
 
 This tool is the result of a collaborative effort of many people in the DFIR community.
+
+ALEAPP logo courtesy of Derek Eiri.
